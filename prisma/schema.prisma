@@ -14,3 +14,12 @@ model user {
   email     String   @unique
   password  String
 }
+
+model session {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @map("userId")
+  token     String
+  isValid   Boolean  @default(true)
+}
