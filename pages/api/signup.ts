@@ -17,9 +17,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	const cookies = new Cookies(req, res);
 
-	const { email, password } = req.body;
+	const { email, password, name } = req.body;
 
-	if (!email || !password) {
+	if (!email || !password || !name) {
 		res.status(401).json({ message: 'No email or password' });
 		return;
 	}
@@ -39,7 +39,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	await prisma.user.create({
 		data: {
 			email,
-			password
+			password,
+			name
 		}
 	});
 
