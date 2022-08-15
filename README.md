@@ -6,4 +6,5 @@ Features
 - [ ] Social login (Google and GitHub)
 - [x] Prisma ORM
 - [x] Tailwind
-- [ ] Bcrypt.js to encrypt password
+- [x] Bcrypt.js to encrypt password
+- [x] Jest for unit tests
