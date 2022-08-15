@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import HttpException from '../../exceptions/http-exception';
+import { hashPassword } from '../../libs/password';
 const prisma = new PrismaClient();
 
 interface ISignup {
@@ -8,15 +10,31 @@ interface ISignup {
 }
 
 export const signup = async (model: ISignup) => {
+	const { email, password, name } = model;
+
+	if (!email || !password || !name) {
+		throw new HttpException('Missing required fields', 400);
+	}
+
 	const user = await prisma.user.findFirst({
 		where: {
-			email: model.email
+			email
 		}
 	});
 
 	if (user) {
-		throw new Error('User already exists');
+		throw new HttpException('User already exists', 404);
 	}
 
-	return;
+	const passwordHashed = await hashPassword(password);
+
+	const userCreated = await prisma.user.create({
+		data: {
+			email,
+			password: passwordHashed,
+			name
+		}
+	});
+
+	return userCreated;
 };

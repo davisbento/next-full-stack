@@ -11,6 +11,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  },
   "dependencies": {
     "@prisma/client": "^4.2.1",
     "bcryptjs": "^2.4.3",
@@ -20,6 +23,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.4.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookies": "^0.7.7",
     "@types/jest": "^28.1.6",
