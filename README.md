@@ -2,7 +2,8 @@
 
 Features
 
-- [ ] MongoDB connection
+- [x] PostgreSQL connection
 - [ ] Social login (Google and GitHub)
-- [ ] Prisma ORM
+- [x] Prisma ORM
 - [x] Tailwind
+- [ ] Bcrypt.js to encrypt password
