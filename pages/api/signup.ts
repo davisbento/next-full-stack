@@ -6,6 +6,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { hashPassword } from '../../libs/password';
+import { signup } from '../../services/auth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const methodsAllowed = ['POST'];
@@ -15,8 +17,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		return;
 	}
 
-	const cookies = new Cookies(req, res);
-
 	const { email, password, name } = req.body;
 
 	if (!email || !password || !name) {
@@ -24,27 +24,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		return;
 	}
 
-	// create user using the pruisma client
-	const user = await prisma.user.findFirst({
-		where: {
-			email
-		}
-	});
+	await signup({ email, password, name });
 
-	if (user) {
-		res.status(401).json({ message: 'User already exists' });
-		return;
-	}
+	const passwordHashed = await hashPassword(password);
 
 	await prisma.user.create({
 		data: {
 			email,
-			password,
+			password: passwordHashed,
 			name
 		}
 	});
 
 	const authToken = generateToken();
+
+	const cookies = new Cookies(req, res);
 
 	// Set the authToken as an HTTP-only cookie.
 	// We'll also set the SameSite attribute to
