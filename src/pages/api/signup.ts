@@ -1,6 +1,7 @@
 import { signup } from '../../services/auth';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const methodsAllowed = ['POST'];
 

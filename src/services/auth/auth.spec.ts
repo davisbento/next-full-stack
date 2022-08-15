@@ -2,7 +2,7 @@ import { signup } from '.';
 
 import { faker } from '@faker-js/faker';
 
-describe('AuthService', () => {
+describe('Sign Up', () => {
 	it('should throws an error on missing fields', async () => {
 		try {
 			const model = {
