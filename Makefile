@@ -1,12 +1,15 @@
 DB_URL=postgresql://root:secret@localhost:5432/next-full-stack?sslmode=disable
 
 # sync prisma schema to database
-update-db:
+migrateup:
 	npx prisma db push
 
 # bring db changes to the codebase/prisma schemas
 update-code:
 	npx prisma db pull
+
+seed:
+	npx ts-node src/prisma/seed.ts
 
 postgres:
 	docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine

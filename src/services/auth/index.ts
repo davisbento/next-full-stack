@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import HttpException from '../../exceptions/http-exception';
 import { comparePassword, hashPassword } from '../../libs/password';
-const prisma = new PrismaClient();
+import prisma from '../../prisma/prisma-client';
 
 interface ISignup {
 	email: string;

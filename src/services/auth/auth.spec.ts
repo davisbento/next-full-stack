@@ -1,6 +1,8 @@
 import { signup } from '.';
 
 import { faker } from '@faker-js/faker';
+import prisma from '../../prisma/prisma-client';
+import { hashPassword } from '../../libs/password';
 
 describe('Sign Up', () => {
 	it('should throws an error on missing fields', async () => {
@@ -20,9 +22,20 @@ describe('Sign Up', () => {
 
 	it('should throws an error on user already exists', async () => {
 		try {
+			const email = faker.internet.email();
+			const password = faker.internet.password();
+
+			await prisma.user.create({
+				data: {
+					email,
+					password: await hashPassword(password),
+					name: faker.name.fullName()
+				}
+			});
+
 			const model = {
-				email: 'test@test.com',
-				password: faker.internet.password(),
+				email,
+				password,
 				name: faker.internet.userName()
 			};
 			await signup(model);
