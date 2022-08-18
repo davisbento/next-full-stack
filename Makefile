@@ -2,7 +2,7 @@ DB_URL=postgresql://root:secret@localhost:5432/next-full-stack?sslmode=disable
 
 # sync prisma schema to database
 migrateup:
-	npx prisma db push
+	npx prisma generate && npx prisma db push
 
 # bring db changes to the codebase/prisma schemas
 update-code:
@@ -25,3 +25,6 @@ create-account:
 		-H "Content-Type: application/json" \
 		-d '{"name": "John Doe", "email": "test@test.com", "password": "test"}' \
 		http://localhost:3000/api/signup
+
+test:
+	npx jest --coverage
