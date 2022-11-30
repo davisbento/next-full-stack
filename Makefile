@@ -9,7 +9,7 @@ update-code:
 	npx prisma db pull
 
 seed:
-	npx ts-node src/prisma/seed.ts
+	npx ts-node src/prisma/seed/index.ts
 
 postgres:
 	docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine

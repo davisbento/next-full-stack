@@ -35,9 +35,10 @@ model Session {
 }
 
 model Coffee {
-  id    Int    @id @default(autoincrement())
-  name  String
-  value Int
+  id           Int    @id @default(autoincrement())
+  name         String
+  description  String
+  valueInCents Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
