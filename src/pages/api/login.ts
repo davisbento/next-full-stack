@@ -1,7 +1,7 @@
 import Cookies from 'cookies';
 
 import { generateToken } from '../../libs/token';
-import { login } from '../../services/auth';
+import { login } from '../../services/auth/login';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

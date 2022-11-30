@@ -1,4 +1,4 @@
-import { login } from '.';
+import { login } from './login';
 import { faker } from '@faker-js/faker';
 import prisma from '../../prisma/prisma-client';
 import { hashPassword } from '../../libs/password';

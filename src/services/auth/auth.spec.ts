@@ -1,4 +1,4 @@
-import { signup } from '.';
+import { signup } from './signup';
 
 import { faker } from '@faker-js/faker';
 import prisma from '../../prisma/prisma-client';

@@ -1,5 +1,7 @@
 # Backend + Frontend using Next.JS Framework
 
+This project is a simple Coffee Shop ecommerce.
+
 Features
 
 - [x] PostgreSQL connection
