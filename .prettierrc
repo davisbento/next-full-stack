@@ -4,7 +4,7 @@
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "ignore",
   "semi": false,
-  "singleQuote": false,
+  "singleQuote": true,
   "jsxSingleQuote": false,
   "tabWidth": 2,
   "trailingComma": "es5",

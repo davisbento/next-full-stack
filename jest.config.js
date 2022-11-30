@@ -1,11 +1,14 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-	preset: 'ts-jest',
-	testEnvironment: 'node',
-	moduleDirectories: ['node_modules', 'src'],
-	globals: {
-		'ts-jest': {
-			isolatedModules: true
-		}
-	}
-};
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  moduleDirectories: ['node_modules', 'src'],
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        isolatedModules: true,
+      },
+    ],
+  },
+}
