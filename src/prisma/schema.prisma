@@ -16,18 +16,48 @@ model User {
   updatedAt DateTime @updatedAt
 
   sessions Session[]
+  Order    Order[]
 
   @@map("users")
 }
 
 model Session {
-  id     Int   @id @default(autoincrement())
-  User   User? @relation(fields: [userId], references: [id])
+  id     Int    @id @default(autoincrement())
   userId Int
+  token  String
 
-  token     String
+  User User? @relation(fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("sessions")
+}
+
+model Coffee {
+  id    Int    @id @default(autoincrement())
+  name  String
+  value Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Order     Order[]
+
+  @@map("coffees")
+}
+
+model Order {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  coffeeId Int
+  quantity Int
+  status   String @default("pending")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  Coffee Coffee? @relation(fields: [coffeeId], references: [id])
+
+  @@map("orders")
 }
