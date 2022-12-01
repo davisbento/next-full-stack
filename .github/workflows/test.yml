@@ -34,5 +34,8 @@ jobs:
       - name: Run migrations
         run: make migrateup
 
+      - name: Run seeds
+        run: make seed
+
       - name: Test
         run: make test
