@@ -1,7 +1,21 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
+import Link from 'next/link'
+import { trpc } from '../utils/trpc'
 
 const Home: NextPage = () => {
-	return <h1>Hello</h1>;
-};
+  const hello = trpc.hello.useQuery({ text: 'clientdadsa' })
 
-export default Home;
+  if (!hello.data) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <div>
+      <p>{hello.data.greeting}</p>
+
+      <Link href="/coffees">Coffees</Link>
+    </div>
+  )
+}
+
+export default Home

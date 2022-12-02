@@ -10,3 +10,4 @@ Features
 - [x] Tailwind
 - [x] Bcrypt.js to encrypt password
 - [x] Jest for unit tests
+- [x] tRPC

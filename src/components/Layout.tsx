@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
 interface IProps {
-	children: ReactNode;
+  children: ReactNode
 }
 
 export const Layout = ({ children }: IProps) => {
-	return <main className='main bg-slate-700'>{children}</main>;
-};
+  return <main className="main">{children}</main>
+}
