@@ -1,21 +1,31 @@
-import type { NextPage } from 'next'
-import Link from 'next/link'
-import { trpc } from '../utils/trpc'
+import type { GetServerSideProps, NextPage } from 'next'
+import Cookies from 'cookies'
 
 const Home: NextPage = () => {
-  const hello = trpc.hello.useQuery({ text: 'clientdadsa' })
-
-  if (!hello.data) {
-    return <div>Loading...</div>
-  }
-
   return (
     <div>
-      <p>{hello.data.greeting}</p>
-
-      <Link href="/coffees">Coffees</Link>
+      <h1>Bem-vindo a nossa Coffee Store</h1>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { req, res } = ctx
+  const cookies = Cookies(req, res)
+  const token = cookies.get('auth-token')
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
 
 export default Home

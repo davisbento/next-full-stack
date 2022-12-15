@@ -21,6 +21,7 @@
     "@trpc/next": "^10.4.3",
     "@trpc/react-query": "^10.4.3",
     "@trpc/server": "^10.4.3",
+    "axios": "^1.2.1",
     "bcryptjs": "^2.4.3",
     "cookies": "^0.8.0",
     "next": "13.0.5",
