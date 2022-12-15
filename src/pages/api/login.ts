@@ -1,35 +1,51 @@
-import Cookies from 'cookies';
+import Cookies from 'cookies'
 
-import { generateToken } from '../../libs/token';
-import { login } from '../../services/auth/login';
+import { generateToken } from '../../libs/token'
+import { login } from '../../services/auth/login'
+import prisma from '../../prisma/prisma-client'
 
-import type { NextApiRequest, NextApiResponse } from 'next';
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const methodsAllowed = ['POST'];
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-	if (!methodsAllowed.includes(req?.method || '')) {
-		res.status(405).json({ message: 'Method not allowed' });
-		return;
-	}
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const methodsAllowed = ['POST']
 
-	const { email, password } = req.body;
+  if (!methodsAllowed.includes(req?.method || '')) {
+    res.status(405).json({ message: 'Method not allowed' })
+    return
+  }
 
-	await login(email, password);
+  const { email, password } = req.body
 
-	const authToken = generateToken();
+  try {
+    const user = await login(email, password)
 
-	const cookies = new Cookies(req, res);
+    const authToken = generateToken()
 
-	// Set the authToken as an HTTP-only cookie.
-	// We'll also set the SameSite attribute to
-	// 'lax' for some additional CSRF protection.
-	cookies.set('auth-token', authToken, {
-		httpOnly: true,
-		sameSite: 'lax'
-	});
+    await prisma.session.create({
+      data: {
+        token: authToken,
+        userId: user.id,
+      },
+    })
 
-	// Our response to the client won't contain
-	// the actual authToken. This way the auth token
-	// never gets exposed to the client.
-	res.status(200).json({ message: 'Login successful' });
+    const cookies = new Cookies(req, res)
+
+    // Set the authToken as an HTTP-only cookie.
+    // We'll also set the SameSite attribute to
+    // 'lax' for some additional CSRF protection.
+    cookies.set('auth-token', authToken, {
+      httpOnly: true,
+      sameSite: 'lax',
+    })
+
+    // Our response to the client won't contain
+    // the actual authToken. This way the auth token
+    // never gets exposed to the client.
+    res.status(200).json({ message: 'Login successful' })
+  } catch (error: any) {
+    res.status(401).json({ message: error.message })
+  }
 }
